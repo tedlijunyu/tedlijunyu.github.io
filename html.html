@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多功能搜索页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .search-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .engine-buttons {
+            margin-bottom: 20px;
+        }
+        .searchButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .searchButton:hover {
+            background-color: #0056b3;
+        }
+        .active {
+            background-color: #28a745;
+        }
+        #searchInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #searchButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #searchButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="engine-buttons">
+            <button class="searchButton" onclick="switchEngine('baidu')" id="baiduBtn">百度</button>
+            <button class="searchButton" onclick="switchEngine('bing')" id="bingBtn">Bing</button>
+            <button class="searchButton" onclick="switchEngine('google')" id="googleBtn">Google</button>
+            <button class="searchButton" onclick="switchEngine('site')" id="siteBtn">站内</button>
+        </div>
+        <input type="text" id="searchInput" placeholder="输入搜索内容" onkeypress="if(event.keyCode === 13) performSearch()">
+        <button id="searchButton" onclick="performSearch()">搜索</button>
+    </div>
+    <script>
+        let currentEngine = 'baidu'; // 默认搜索引擎为百度
+
+        function switchEngine(engine) {
+            // 移除之前的激活状态
+            document.getElementById(currentEngine + 'Btn').classList.remove('active');
+            // 设置新的激活状态
+            document.getElementById(engine + 'Btn').classList.add('active');
+            currentEngine = engine;
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            let url = '';
+            switch(currentEngine) {
+                case 'baidu':
+                    url = `https://www.baidu.com/s?wd=${searchTerm}`;
+                    break;
+                case 'bing':
+                    url = `https://www.bing.com/search?q=${searchTerm}`;
+                    break;
+                case 'google':
+                    url = `https://www.google.com/search?q=${searchTerm}`;
+                    break;
+                case 'site':
+                    url = `https://blog.ted-lijunyu.top/tag.html`;
+                    window.location.href = url; // 直接跳转到站内搜索页面
+                    return; // 防止后续代码执行
+            }
+            window.open(url, '_blank');
+        }
+
+        // 初始化时设置百度按钮为激活状态
+        document.getElementById('baiduBtn').classList.add('active');
+    </script>
+</body>
+</html>
